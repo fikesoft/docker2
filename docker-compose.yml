@@ -1,0 +1,21 @@
+version: '3.8'  
+services:
+  php:
+    build: .
+    volumes:
+      - ./php-file:/var/www/indexWeb
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"  
+    volumes:
+      - ./php-file:/var/www/indexWeb
+      - ./conf:/etc/nginx/conf.d/
+
+  mysql-database:
+    image: mysql:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_database
